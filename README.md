@@ -4,8 +4,10 @@ FastAPI + async SQLAlchemy + PostgreSQL REST API with JWT auth and role-based ac
 
 ## Run with Docker
 ```
-docker compose up -d --build   # API on http://localhost:8000, Swagger UI at /docs
+cp .env.example .env           # then set JWT_SECRET_KEY (min 32 chars) - compose refuses to start without it
+docker compose up -d --build --wait   # API on http://localhost:8000, Swagger UI at /docs
 ```
+Postgres is published on host port 5433 (override with `POSTGRES_HOST_PORT`). `ENVIRONMENT=production` in the container makes the app refuse to boot with a default/short `JWT_SECRET_KEY`.
 The container applies Alembic migrations and seeds demo data on start.
 
 ## Run locally
