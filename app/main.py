@@ -7,11 +7,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+from app.api import api_router
 from app.core.config import get_settings
 from app.core.database import engine
 from app.core.error_handlers import register_exception_handlers
 from app.core.logging import RequestLoggingMiddleware, configure_logging
-from app.api import api_router
 from app.routers.health import router as health_router
 
 logger = logging.getLogger(__name__)
