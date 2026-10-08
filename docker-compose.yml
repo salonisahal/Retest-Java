@@ -1,6 +1,6 @@
 services:
-  db:
-    image: postgres:17
+  postgres:
+    image: postgres:17.2
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -15,16 +15,19 @@ services:
       timeout: 5s
       retries: 10
 
-  app:
-    build: .
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
     environment:
-      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/student_management
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@postgres:5432/student_management
       JWT_SECRET_KEY: ${JWT_SECRET_KEY:-change-me-in-production}
       ENVIRONMENT: production
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
     ports:
       - "8000:8000"
     depends_on:
-      db:
+      postgres:
         condition: service_healthy
 
 volumes:

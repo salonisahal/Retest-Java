@@ -12,8 +12,8 @@ Run python natively (`python`, `pytest`, `ruff`, `alembic`). Dockerfile/compose 
 | 2 models + alembic migration 0001 (applied OK to student_management) | DONE |
 | repositories (all 12 + BaseRepository), AccessService, dependencies, health router, main.py, app/api.py | DONE |
 | 3 schemas/services/routers per group (A-E below) | IN PROGRESS (subagents) |
-| seed, tests, Dockerfile, compose, README, .env.example, pyproject (ruff) | TODO |
-| boot verify, pytest, ruff, reports (tests-artifacts/), final | TODO |
+| seed, tests, Dockerfile, compose, README, .env.example, pyproject (ruff) | DONE |
+| boot verify (95/95 live HTTP checks PASS), pytest 27 passed, ruff clean, reports in tests-artifacts/ | DONE. Dockerfile build NOT verified (no docker daemon) |
 
 ## Conventions (all groups MUST follow)
 - Layers: `app/routers/<x>.py` (thin, `router = APIRouter(prefix="/<x>", tags=["<X>"])`, NO prefix /api/v1 - app.main mounts it) -> `app/services/<x>_service.py` (class, takes `AsyncSession`/repos in ctor, owns commit) -> `app/repositories/*` -> models. DTOs in `app/schemas/<x>.py` (all inherit `app.schemas.base.CamelModel`; never return ORM models).
